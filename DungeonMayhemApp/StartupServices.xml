@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<StartupServicesManifest xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/2011/01/fabric">
+  <Parameters>
+    <Parameter Name="MoveAI_InstanceCount" DefaultValue="1" />
+    <Parameter Name="Frontend_InstanceCount" DefaultValue="-1" />
+    <Parameter Name="User_MinReplicaSetSize" DefaultValue="1" />
+    <Parameter Name="User_PartitionCount" DefaultValue="3" />
+    <Parameter Name="User_TargetReplicaSetSize" DefaultValue="3" />
+    <Parameter Name="GameActorService_PartitionCount" DefaultValue="6" />
+    <Parameter Name="GameActorService_MinReplicaSetSize" DefaultValue="1" />
+    <Parameter Name="GameActorService_TargetReplicaSetSize" DefaultValue="3" />
+    <Parameter Name="PlayerActorService_PartitionCount" DefaultValue="6" />
+    <Parameter Name="PlayerActorService_MinReplicaSetSize" DefaultValue="1" />
+    <Parameter Name="PlayerActorService_TargetReplicaSetSize" DefaultValue="3" />
+  </Parameters>
+  <Services>
+    <!-- The section below creates instances of service types, when an instance of this 
+         application type is created. You can also create one or more instances of service type using the 
+         ServiceFabric PowerShell module.
+
+         The attribute ServiceTypeName below must match the name defined in the imported ServiceManifest.xml file. -->
+    <Service Name="MoveAI" ServicePackageActivationMode="ExclusiveProcess">
+      <StatelessService ServiceTypeName="MoveAIType" InstanceCount="[MoveAI_InstanceCount]">
+        <SingletonPartition />
+      </StatelessService>
+    </Service>
+    <Service Name="Frontend" ServicePackageActivationMode="ExclusiveProcess">
+      <StatelessService ServiceTypeName="FrontendType" InstanceCount="[Frontend_InstanceCount]">
+        <SingletonPartition />
+      </StatelessService>
+    </Service>
+    <Service Name="User" ServicePackageActivationMode="ExclusiveProcess">
+      <StatefulService ServiceTypeName="UserType" TargetReplicaSetSize="[User_TargetReplicaSetSize]" MinReplicaSetSize="[User_MinReplicaSetSize]">
+        <UniformInt64Partition PartitionCount="[User_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
+      </StatefulService>
+    </Service>
+    <Service Name="GameActorService" GeneratedIdRef="28aad7ef-36e4-47f1-bed1-33c7d197504a|Persisted">
+      <StatefulService ServiceTypeName="GameActorServiceType" TargetReplicaSetSize="[GameActorService_TargetReplicaSetSize]" MinReplicaSetSize="[GameActorService_MinReplicaSetSize]">
+        <UniformInt64Partition PartitionCount="[GameActorService_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
+      </StatefulService>
+    </Service>
+    <Service Name="PlayerActorService" GeneratedIdRef="f6449ce5-6e44-4d31-94a7-7c04d6bf1a18|Persisted">
+      <StatefulService ServiceTypeName="PlayerActorServiceType" TargetReplicaSetSize="[PlayerActorService_TargetReplicaSetSize]" MinReplicaSetSize="[PlayerActorService_MinReplicaSetSize]">
+        <UniformInt64Partition PartitionCount="[PlayerActorService_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
+      </StatefulService>
+    </Service>
+  </Services>
+</StartupServicesManifest>

@@ -1,0 +1,1 @@
+{"ast":null,"code":"export const environment = {\n  production: true,\n  backendHost: \"http://dungeonmayhem.uksouth.cloudapp.azure.com:8821/\"\n};","map":null,"metadata":{},"sourceType":"module","externalDependencies":[]}

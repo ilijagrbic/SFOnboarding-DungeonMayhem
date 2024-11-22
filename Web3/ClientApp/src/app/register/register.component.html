@@ -1,0 +1,21 @@
+<h1>Register:</h1>
+<h5>Enter your username and password!</h5>
+<form (ngSubmit)="onSubmit()">
+    <mat-list>
+        <mat-list-item>
+            <mat-form-field appearance="fill">
+                <mat-label>Username</mat-label>
+                <input matInput type="text" [(ngModel)]="username" name="username" required>
+            </mat-form-field>
+        </mat-list-item>
+        <mat-list-item>
+            <mat-form-field appearance="fill">
+                <mat-label>Password</mat-label>
+                <input matInput type="password" [(ngModel)]="password" name="password" required>
+            </mat-form-field>
+        </mat-list-item>
+        <mat-list-item>
+            <button mat-raised-button color="primary" type="submit">Register</button>
+        </mat-list-item>
+    </mat-list>
+</form>
